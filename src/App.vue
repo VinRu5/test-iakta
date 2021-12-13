@@ -3,23 +3,20 @@
     <!-- <Register
       v-if="show.register"
       @registerTrue="viewLogin"
-    />
+    />-->
     <Login 
       v-if="show.login"
       @loginTrue="viewContent"
     />
     <Main 
       v-if="show.content"
-    /> -->
-    <Main 
-      
-    />
+    /> 
   </div>
 </template>
 
 <script>
 
-// import Login from './components/Login.vue'
+import Login from './components/Login.vue'
 // import Register from './components/Register.vue'
 import Main from './components/Main.vue'
 
@@ -28,7 +25,7 @@ export default {
   name: 'App',
   components: {
     // Register,
-    // Login,
+    Login,
     Main
     
   },
@@ -37,7 +34,7 @@ export default {
     return {
       show: {
         register: true,
-        login: false,
+        login: true,
         content: false,
       }
     }
