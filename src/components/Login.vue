@@ -1,7 +1,6 @@
 <template>
     <div class="row justify-content-center">
-        <h1>Registrati subito!</h1>
-        <form @submit.prevent="sendRegister" class="form-container col-8">
+        <form @submit.prevent="sendLogin" class="form-container col-8">
             <div class="row form-section"> 
                 <label for="username" class="col-12">Username</label>
                 <input 
@@ -9,18 +8,7 @@
                     id="username" 
                     name="username" 
                     class="col-12" 
-                    v-model="register.username"
-                />
-            </div>
-
-            <div class="row form-section">
-                <label for="email" class="col-12">Email</label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    class="col-12"
-                    v-model="register.email"
+                    v-model="login.username"
                 />
             </div>
 
@@ -31,12 +19,12 @@
                     name="password" 
                     id="password" 
                     class="col-12"
-                    v-model="register.password"
+                    v-model="login.password"
                 />
             </div>
 
             <div class="form-section">
-                <input type="submit" value="Registrati" class="btn btn-primary"> 
+                <input type="submit" value="Accedi" class="btn btn-primary"> 
             </div>
         </form>
 
@@ -47,25 +35,27 @@
 import axios from 'axios';
 
 export default {
-    name: 'Register',
+    name: 'Login',
 
     data() {
         return {
-            register: {},
+            login: {},
         }
     },
 
     methods: {
-        sendRegister() {
-            console.log('register', this.register);
+        sendLogin() {
 
-            axios.post('http://staging.iakta.net:8000/api/register', this.register)
+            axios.post('http://staging.iakta.net:8000/api/login', this.login)
             .then(res => {
                 console.log(res.data);
-                this.$emit('registerTrue');
+                //this.$cookies.set('token', res.data.token);
+                localStorage.token = res.data.token;
+                this.$emit('loginTrue');
             })
             .catch(e => {
                 console.error(e);
+                
             })
         }
     }
