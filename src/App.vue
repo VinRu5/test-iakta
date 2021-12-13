@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <!-- <Register
+    <Register
       v-if="show.register"
       @registerTrue="viewLogin"
-    />-->
+    />
     <Login 
       v-if="show.login"
       @loginTrue="viewContent"
@@ -20,14 +20,14 @@
 import axios from 'axios';
 
 import Login from './components/Login.vue'
-// import Register from './components/Register.vue'
+import Register from './components/Register.vue'
 import Main from './components/Main.vue'
 
 
 export default {
   name: 'App',
   components: {
-    // Register,
+    Register,
     Login,
     Main
     
@@ -54,7 +54,7 @@ export default {
     return {
       show: {
         register: true,
-        login: true,
+        login: false,
         content: false,
       },
 
