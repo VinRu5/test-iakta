@@ -10,11 +10,14 @@
     />
     <Main 
       v-if="show.content"
+      :posts="posts"
+      @sendMessage="sendMessage"
     /> 
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 
 import Login from './components/Login.vue'
 // import Register from './components/Register.vue'
@@ -30,13 +33,32 @@ export default {
     
   },
 
+  created() {
+
+        if(localStorage.token) {
+            this.token = localStorage.token;
+        }
+
+        axios.get('http://staging.iakta.net:8000/api/posts', {
+           'headers': { 'Authorization': `Bearer ${this.token}` }
+          })
+          .then(res=>{
+            this.posts = res.data;
+          })
+          .catch(e =>{
+            console.log(e);
+          });
+    },
+
   data() {
     return {
       show: {
         register: true,
         login: true,
         content: false,
-      }
+      },
+
+      posts: []
     }
   },
 
@@ -55,6 +77,27 @@ export default {
         login: false,
         content: true,
       }
+    },
+
+    sendMessage(dataMessage) {
+      console.log('now', dataMessage)
+      axios.post('http://staging.iakta.net:8000/api/postMessage', dataMessage, 
+            {headers: { 'Authorization': `Bearer ${this.token}` }})
+            .then(res=> {
+              console.log(res)
+                axios.get('http://staging.iakta.net:8000/api/posts', {
+           'headers': { 'Authorization': `Bearer ${this.token}` }
+          })
+          .then(res=>{
+            this.posts = res.data;
+          })
+          .catch(e =>{
+            console.log(e);
+          });
+            })
+            .catch(e => {
+                console.log(e)
+            })
     }
   }
 }

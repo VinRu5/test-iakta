@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 export default {
     name: 'NewPost',
 
@@ -38,14 +38,7 @@ export default {
 
     methods: {
         sendMessage() {
-            axios.post('http://staging.iakta.net:8000/api/postMessage', this.dataMessage, 
-            {headers: { 'Authorization': `Bearer ${this.token}` }})
-            .then(res=> {
-                console.log(res)
-            })
-            .catch(e => {
-                console.log(e)
-            })
+            this.$emit('sendMessage', this.dataMessage);
         }
     }
 }

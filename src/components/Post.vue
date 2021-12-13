@@ -7,31 +7,15 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     name: 'Post',
 
-    created() {
-
-        if(localStorage.token) {
-            this.token = localStorage.token;
-        }
-
-        axios.get('http://staging.iakta.net:8000/api/posts', {
-           'headers': { 'Authorization': `Bearer ${this.token}` }
-          })
-          .then(res=>{
-            this.posts = res.data;
-          })
-          .catch(e =>{
-            console.log(e);
-          });
+    props: {
+        posts: Array,
     },
 
     data() {
         return {
-            token: '',
-            posts: [],
         }
     }
 }

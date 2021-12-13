@@ -1,7 +1,11 @@
 <template>
   <div class="row">
-      <NewPost/>
-      <Post/>
+      <NewPost
+        @sendMessage="sendMessage"
+      />
+      <Post 
+        :posts="posts"
+      />
 
   </div>
 </template>
@@ -12,6 +16,16 @@ import Post from './Post.vue'
 export default {
   components: { Post, NewPost },
     name: 'Main',
+    props: {
+        posts: Array,
+
+    },
+
+    methods: {
+        sendMessage(dataMessage) {
+            this.$emit('sendMessage', dataMessage)
+        }
+    }
 
 }
 </script>
